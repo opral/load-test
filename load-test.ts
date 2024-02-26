@@ -22,7 +22,7 @@ await clean()
 await runLoadTest()
 
 async function runLoadTest() {
-	console.log("Opening repo-i18next and loading project")
+	console.log("opening repo and loading project")
 	const repo = await openRepository(repoI18next, { nodeishFs: fs })
 	const project = await loadProject({ repo, projectPath })
 	project.errors.subscribe((errors) => {
@@ -56,8 +56,7 @@ async function checkIfServerIsRunning() {
 }
 
 async function clean() {
-	console.log("Cleaning repo-i18next")
+	console.log("clean")
 	await exec("pnpm clean", { cwd: repoI18next })
-	console.log("Finished cleaning repo-i18next")
 }
 

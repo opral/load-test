@@ -13,6 +13,7 @@
 		"typescript": "^5.3.3"
 	},
 	"scripts": {
-		"clean": "git clean -fdx ./locales && git checkout ./locales"
+		"clean": "git clean -fdx ./locales && git checkout ./locales",
+		"test": "tsx ./load-test.ts"
 	}
 }
