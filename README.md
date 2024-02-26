@@ -1,6 +1,6 @@
 # inlang sdk load-test repo with i18next
 
-This repo can be used to simulate a repo with a larger numbers of meesages.
+This repo can be used for volume testing, with more meesages than existing unit tests.
 
 ### test defaults
 1. This test generates 1000 messages in English.
