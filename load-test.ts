@@ -20,8 +20,6 @@ const mockServer = "http://localhost:3000"
 const cli = `PUBLIC_SERVER_BASE_URL=${mockServer} pnpm inlang`
 const translateCommand = cli + " machine translate -f --project ./project.inlang"
 
-await runLoadTest()
-
 export async function runLoadTest(messageCount: number = 1000, translate: boolean = true) {
 	if (translate && !(await isServerRunning())) {
 		console.error(
