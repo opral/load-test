@@ -17,46 +17,62 @@ const projectPath = join(repoI18next, "project.inlang")
 
 const mockServer = "http://localhost:3000"
 
-await checkIfServerIsRunning()
-await clean()
+const cli = `PUBLIC_SERVER_BASE_URL=${mockServer} pnpm inlang`
+const translateCommand = cli + " machine translate -f --project ./project.inlang"
+
 await runLoadTest()
 
-async function runLoadTest() {
+export async function runLoadTest(messageCount: number = 1000, translate: boolean = true) {
+	if (translate && !(await isServerRunning())) {
+		console.error(
+			`Please start the mock rpc server with "MOCK_TRANSLATE=true pnpm --filter @inlang/server dev"`
+		)
+		return
+	}
+
 	console.log("opening repo and loading project")
 	const repo = await openRepository(repoI18next, { nodeishFs: fs })
 	const project = await loadProject({ repo, projectPath })
+
+	console.log("subscribing to project.errors")
 	project.errors.subscribe((errors) => {
 		if (errors.length > 0) {
-					console.log("project errors", errors[0])
+			console.log("project errors", errors[0])
 		}
 	})
+
+	console.log("subscribing to messages.getAll")
 	project.query.messages.getAll.subscribe((messages) => {
-			console.log("messages changed", messages.length)
+		console.log("messages changed", messages.length)
 	})
-	await generateSourceMessageFile(1000)
+
+	await generateMessageFile(messageCount)
+
+	if (translate) {
+		console.log("translating messages - shipping cli will pause for 8s when done")
+		await exec(translateCommand, { cwd: repoI18next })
+	}
 }
 
-async function generateSourceMessageFile(count: number) {
+async function generateMessageFile(messageCount: number) {
 	const messages: Record<string, string> = {}
-	console.log(`Generating ${count} messages`)
-	for (let i = 1; i <= count; i++) {
+	console.log(`generating ${messageCount} messages`)
+	for (let i = 1; i <= messageCount; i++) {
 		messages[`message_key_${i}`] = `Generated message (${i})`
 	}
 	await fs.writeFile(
-		join(repoI18next, "locales", "en", "common.json"),
+		join(".", "locales", "en", "common.json"),
 		JSON.stringify(messages, undefined, 2),
 		"utf-8"
 	)
-	console.log(`Finished generating ${count} messages`)
+	console.log(`finished generating ${messageCount} messages`)
 }
 
-async function checkIfServerIsRunning() {
-	const { stdout } = await exec(`curl ${mockServer}/ping`)
-	console.log(stdout)
+async function isServerRunning(): Promise<boolean> {
+	try {
+		await exec(`curl ${mockServer}/ping`)
+		return true
+	} catch (error) {
+		return false
+	}
 }
-
-async function clean() {
-	console.log("clean")
-	await exec("pnpm clean", { cwd: repoI18next })
-}
-
