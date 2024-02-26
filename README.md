@@ -3,9 +3,9 @@
 This repo can be used to simulate a repo with a larger numbers of meesages.
 
 ### test defaults
-1. This test generates 1000 messages in english.
+1. This test generates 1000 messages in English.
 2. It then "mock-translates" those into 37 languages using the inlang cli.
-3. lint plugins are configured in poject settings
+3. Lint-rule plugins are configured in the project settings.
 
 ### mock rpc server
 This test expects the rpc server from PR [#2108](https://github.com/opral/monorepo/pull/2108) running on localhost:3000 with MOCK_TRANSLATION=true
