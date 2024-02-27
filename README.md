@@ -1,4 +1,4 @@
-# inlang sdk load-test repo with i18next
+# inlang sdk load-test
 
 This repo can be used for volume testing, with more meesages than existing unit tests.
 
