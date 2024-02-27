@@ -1,6 +1,7 @@
+/* eslint-disable no-console */
 import { runLoadTest } from "./load-test.js"
 
-let usage = `
+const usage = `
 USAGE: pnpm test [messageCount] [translate] [subscribeToMessages] [subscribeToLintReports]
 e.g.
       pnpm test 300
