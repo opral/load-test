@@ -8,7 +8,9 @@
 		"@inlang/cli": "^2.12.5",
 		"@inlang/sdk": "^0.26.4",
 		"@lix-js/client": "^0.8.0",
+		"@types/debug": "^4.1.12",
 		"@types/node": "^20.11.20",
+		"debug": "^4.3.4",
 		"i18next": "^23.10.0",
 		"tsx": "^4.7.1",
 		"typescript": "^5.3.3"
@@ -16,8 +18,8 @@
 	"scripts": {
 		"clean": "rm -rf ./locales",
 		"translate": "PUBLIC_SERVER_BASE_URL=http://localhost:3000 pnpm inlang machine translate -f --project ./project.inlang",
-		"test": "pnpm clean && tsx ./main.ts",
-		"inspect": "pnpm clean && tsx --inspect-brk ./main.ts"
+		"test": "pnpm clean && DEBUG=$DEBUG,load-test tsx ./main.ts",
+		"inspect": "pnpm clean && DEBUG=$DEBUG,load-test tsx --inspect-brk ./main.ts"
 	},
 	"prettier": {
 		"semi": false,
