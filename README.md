@@ -1,6 +1,6 @@
 # inlang sdk load-test
 
-This repo can be used for volume testing, with more meesages than existing unit tests.
+This repo can be used for volume testing, with more messages than existing unit tests.
 
 The test opens an inlang project and then generates json messages, overwriting ./locales/en/common.json. It can "mock-translate" those into 37 preconfigured languages using the inlang cli.
 
