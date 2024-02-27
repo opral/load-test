@@ -2,10 +2,20 @@
 
 This repo can be used for volume testing, with more meesages than existing unit tests.
 
-### test defaults
-1. The test generates 1000 messages in English.
-2. It then "mock-translates" those into 37 languages using the inlang cli.
-3. Lint-rule plugins are configured in the project settings.
+The test opens an inlang project and then generates json messages, overwriting ./locales/en/common.json. It can "mock-translate" those into 37 preconfigured languages using the inlang cli.
+
+Lint-rule plugins are configured in the project settings but not subscribed (see usage).
+
+To allow additional testing on the generated project e.g. with the ide-extension, the test calls `pnpm clean` when it starts, but not after it runs.
+
+```
+USAGE: pnpm test messageCount [translate] [subscribeToMessages] [subscribeToLintReports]
+e.g.
+      pnpm test 300
+      pnpm test 1000 1 1 0
+
+Defaults: translate: 1, subscribeToMessages: 1, subscribeToLintReports: 0
+```
 
 ### mock rpc server
 This test expects the rpc server from PR [#2108](https://github.com/opral/monorepo/pull/2108) running on localhost:3000 with MOCK_TRANSLATE=true
@@ -24,19 +34,21 @@ git clone https://github.com/opral/load-test.git
 cd load-test
 pnpm install
 ```
+This test is also available under /inlang/source-code/sdk/load-test in the monorepo, using workspace:* dependencies.
 
 ### run load test
-first start the mock rpc server (see above), then
 ```sh
-pnpm test
+pnpm test messageCount [translate] [subscribeToMessages] [subscribeToLintReports]
 ```
 
 ### clean
 ```sh
+# runs `git checkout ./locales`
 pnpm clean
 ```
 
 ### debug in chrome dev tools with node inspector
 ```sh
-pnpm inspect
+# passes --inpect-brk to node
+pnpm inspect messageCount [translate] [subscribeToMessages] [subscribeToLintReports]
 ```
