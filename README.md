@@ -36,19 +36,19 @@ pnpm install
 ```
 This test is also available under /inlang/source-code/sdk/load-test in the monorepo, using workspace:* dependencies.
 
-### run load test
+### run
 ```sh
 pnpm test messageCount [translate] [subscribeToMessages] [subscribeToLintReports]
 ```
 
 ### clean
+runs `git checkout ./locales`
 ```sh
-# runs `git checkout ./locales`
 pnpm clean
 ```
 
 ### debug in chrome dev tools with node inspector
+passes --inpect-brk to node
 ```sh
-# passes --inpect-brk to node
 pnpm inspect messageCount [translate] [subscribeToMessages] [subscribeToLintReports]
 ```
