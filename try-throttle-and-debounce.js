@@ -2,8 +2,8 @@
 /*
 
 This logs all key presses to the console
-Throttled keypresses are logged again, prefixed with "==> "
-Debounced keypresses are logged again, prefixed with "<~~ "
+Throttled keypresses are logged again, prefixed with "🟡 "
+Debounced keypresses are logged again, prefixed with "🔴 "
 
 Notice throttled keypress are logged at start, at each interval, and at the end.
 The last event may have a delay, if events stopped in the middle of an interval.
@@ -24,11 +24,11 @@ readline.emitKeypressEvents(process.stdin)
 if (process.stdin.isTTY) process.stdin.setRawMode(true)
 
 const throttledKeyPressHandler = throttle(1000, (_, key) => {
-	console.log("==> " + key?.sequence)
+	console.log("🟡 " + key?.sequence)
 })
 
 const debouncedKeyPressHandler = debounce(1000, (_, key) => {
-	console.log("<~~ " + key?.sequence)
+	console.log("🔴 " + key?.sequence)
 }, { atBegin: false })
 
 const keypressHandler = (_, key) => {
